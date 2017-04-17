@@ -7,4 +7,4 @@ WORKDIR /code
 RUN pip install djangorestframework
 RUN pip install pygments
 
-
+ENV PYTHONUNBUFFERED 1
