@@ -1,9 +1,22 @@
- version: '2'
- services:
-   web:
-     build: .
-     command: python manage.py runserver 0.0.0.0:8000
-     volumes:
-       - .:/code
-     ports:
-       - "8000:8000"
+version: '2'
+services:
+    web:
+        image: python:3.6.1
+        environment:
+            PYTHONUNBUFFERED: 1
+        command: [ "bash", "-c",
+            "source ./venv/bin/activate && python manage.py runserver 0.0.0.0:8000"
+            ]
+        volumes:
+            - .:/code
+        working_dir: /code
+        ports:
+            - "8000:8000"
+    build:
+        image: python-virtualenv
+        command: [ "bash", "-c",
+            "if [ ! -d venv ]; then virtualenv venv && source ./venv/bin/activate && pip install -r requirements.txt; fi"
+            ]
+        volumes:
+            - .:/code
+        working_dir: /code
