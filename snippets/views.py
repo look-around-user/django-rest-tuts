@@ -6,7 +6,7 @@ from .serializers import SnippetSerializer
 
 
 @api_view(['GET', 'POST'])
-def snippet_list(request):
+def snippet_list(request, format=None):
     if request.method == 'GET':
         snippets = Snippet.objects.all()
         serializer = SnippetSerializer(snippets, many=True)
@@ -21,7 +21,7 @@ def snippet_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def snippet_detail(request, pk):
+def snippet_detail(request, pk, format=None):
     """
     Retrieve, update or delete a code snippet.
     """
@@ -43,4 +43,4 @@ def snippet_detail(request, pk):
 
     elif request.method == 'DELETE':
         snippet.delete()
-        return Response(status=status.HTTP_204_NO_CO)
+        return Response(status=status.HTTP_204_NO_CONTENT)
